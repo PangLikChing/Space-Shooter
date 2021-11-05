@@ -42,6 +42,12 @@
     <ClCompile Include="EnemyProjectile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Star.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBoss.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Object.h">
@@ -69,6 +75,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EnemyProjectile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Star.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBoss.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

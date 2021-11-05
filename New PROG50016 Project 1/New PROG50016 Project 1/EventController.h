@@ -13,7 +13,7 @@ public:
 
 	~EventController();
 
-	void HandleEvents(sf::Event event, sf::RenderWindow* window, Player* player, std::vector<Enemy*>& enemies, std::vector<Asteroid*>& asteroids);
+	void HandleEvents(sf::Event event, sf::RenderWindow* window, Player* player, std::vector<Enemy*>& enemies, std::vector<Asteroid*>& asteroids, std::vector<Star*>& stars);
 };
 
 #endif // !EVENTCONTROLLER_H

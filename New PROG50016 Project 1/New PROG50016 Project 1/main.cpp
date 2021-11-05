@@ -3,10 +3,10 @@
 #include <vector>
 #include "EventController.h"
 #include "Player.h"
-#include "Enemy.h"
+#include "EnemyBoss.h"
 #include "Asteroid.h"
 
-void Reload(int &_score, int &_highScore, int &_playerLife, Player* _player, sf::RenderWindow* window, std::vector<Enemy*> &_enemies, std::vector<Asteroid*> &_asteroids)
+void Reload(int &_score, int &_highScore, int &_playerLife, Player* _player, sf::RenderWindow* window, std::vector<Enemy*> &_enemies, std::vector<Asteroid*> &_asteroids, std::vector<EnemyBoss*> &_enemyBoss)
 {
 	if (_player->GetHealth() <= 0)
 	{
@@ -28,12 +28,19 @@ void Reload(int &_score, int &_highScore, int &_playerLife, Player* _player, sf:
 			_enemies[i] = nullptr;
 		}
 
+		for (int i = 0; i < _enemyBoss.size(); i++)
+		{
+			delete _enemyBoss[i];
+			_enemyBoss[i] = nullptr;
+		}
+
 		for (int i = 0; i < _asteroids.size(); i++)
 		{
 			delete _asteroids[i];
 			_asteroids[i] = nullptr;
 		}
 
+		_enemyBoss.clear();
 		_enemies.clear();
 		_asteroids.clear();
 		// Reset Player position
@@ -59,17 +66,22 @@ int main()
 	window->setView(view);
 	window->setFramerateLimit(60);
 
-	// Initializing players and enemies timer
+	// Initializing player, enemies and stars timer
 	Player* player = new Player();
 	std::vector<Enemy*> enemies = {};
 	std::vector<Asteroid*> asteroids = {};
-	float enemySpawnTimer = 0;
-	float asteroidSpawnTimer = 0;
+	std::vector<Star*> stars = {};
+	std::vector<EnemyBoss*> enemybosses = {};
+	int enemySpawnTimer = 0;
+	int asteroidSpawnTimer = 0;
+	int starSpawnTimer = 0;
+	int enemyBossSpawnTimer = 0;
+	
 
 	// Loading image texture
 	sf::Texture backgroundTexture;
 	// If this failed
-	if (backgroundTexture.loadFromFile("backgroundColor.png") == false)
+	if (backgroundTexture.loadFromFile("starBackground.png") == false)
 	{
 		return 0;
 	}
@@ -125,7 +137,29 @@ int main()
 		sf::Event event;
 		while (window->isOpen() == true && window->pollEvent(event) && window != nullptr)
 		{
-			eventController.HandleEvents(event, window, player, enemies, asteroids);
+			eventController.HandleEvents(event, window, player, enemies, asteroids, stars);
+		}
+
+		// Spawn stars every 4 second
+		if (starSpawnTimer < 240)
+		{
+			starSpawnTimer++;
+		}
+		else
+		{
+			Star* star = new Star(window);
+			stars.push_back(star);
+			starSpawnTimer = 0;
+		}
+
+		// Draw Stars
+		for (int i = 0; i < stars.size(); i++)
+		{
+			if (stars[i] != nullptr)
+			{
+				// Draw
+				stars[i]->DrawObject(window);
+			}
 		}
 
 		// Spawn asteroids every 8 second
@@ -162,7 +196,9 @@ int main()
 				{
 					std::cout << "RELOADDDDDDDDDDDDDDDDDDDDDDDDDDD" << std::endl;
 					player->SetHealth(0);
-					Reload(score, highScore, playerLife, player, window, enemies, asteroids);
+					Reload(score, highScore, playerLife, player, window, enemies, asteroids, enemybosses);
+					scoreText.setString("Score: " + std::to_string(score));
+					lifeText.setString("Life: " + std::to_string(playerLife));
 					highScoreText.setString("Highscore: " + std::to_string(highScore));
 					break;
 				}
@@ -227,11 +263,12 @@ int main()
 					// Reload the game if the player dies
 					if (player->GetHealth() <= 0)
 					{
-						Reload(score, highScore, playerLife, player, window, enemies, asteroids);
+						Reload(score, highScore, playerLife, player, window, enemies, asteroids, enemybosses);
+						scoreText.setString("Score: " + std::to_string(score));
+						lifeText.setString("Life: " + std::to_string(playerLife));
+						highScoreText.setString("Highscore: " + std::to_string(highScore));
 						break;
 					}
-
-					std::cout << "Get Got" << std::endl;
 				}
 			}
 		}
@@ -279,7 +316,9 @@ int main()
 					// Reload Game
 					std::cout << "RELOADDDDDDDDDDDDDDDDDDDDDDDDDDD" << std::endl;
 					player->SetHealth(0);
-					Reload(score, highScore, playerLife, player, window, enemies, asteroids);
+					Reload(score, highScore, playerLife, player, window, enemies, asteroids, enemybosses);
+					scoreText.setString("Score: " + std::to_string(score));
+					lifeText.setString("Life: " + std::to_string(playerLife));
 					highScoreText.setString("Highscore: " + std::to_string(highScore));
 					break;
 				}
@@ -311,7 +350,8 @@ int main()
 				}
 			}
 		}
-		// Clear the enemies list
+
+		// Clear the enemybosses list
 		for (int k = 0; k < toBeDeleted.size(); k++)
 		{
 			delete(enemies[toBeDeleted[k]]);
@@ -319,6 +359,144 @@ int main()
 			enemies.erase(enemies.begin() + toBeDeleted[k]);
 		}
 		toBeDeleted.clear();
+
+		// Spawn enemies every 15 second
+		if (enemyBossSpawnTimer < 900)
+		{
+			enemyBossSpawnTimer++;
+		}
+		else
+		{
+			EnemyBoss* enemyboss = new EnemyBoss(window);
+			enemybosses.push_back(enemyboss);
+			enemyBossSpawnTimer = 0;
+		}
+
+		// Move enemyboss
+		for (int i = 0; i < enemybosses.size(); i++)
+		{
+			if (enemybosses[i] != nullptr)
+			{
+				enemybosses[i]->DrawObject(window);
+
+				// EnemyBosses shoot twice every 1 seconds
+				if (enemybosses[i]->GetShootTimer() < 60)
+				{
+					enemybosses[i]->SetShootTimer(enemybosses[i]->GetShootTimer() + 1);
+				}
+				else if (enemybosses[i]->GetShootTimer() == 60 || enemybosses[i]->GetShootTimer() == 80)
+				{
+					// Enemy Shoot
+					enemybosses[i]->Shoot(window);
+					enemybosses[i]->SetShootTimer(enemybosses[i]->GetShootTimer() + 1);
+				}
+				else if (enemybosses[i]->GetShootTimer() > 60 && enemybosses[i]->GetShootTimer() <= 79)
+				{
+					enemybosses[i]->SetShootTimer(enemybosses[i]->GetShootTimer() + 1);
+				}
+				else if (enemybosses[i]->GetShootTimer() >= 80)
+				{
+					// Enemybosses Shoot
+					enemybosses[i]->SetShootTimer(0);
+				}
+
+				// Draw enemybosses projectile
+				for (int j = 0; j < enemybosses[i]->GetProjectileList().size(); j++)
+				{
+					enemybosses[i]->GetProjectileList()[j]->DrawObject(window);
+				}
+
+				// Check if the enemybosses collides with the player
+				if (enemybosses[i]->GetSprite()->getGlobalBounds().intersects(player->GetSprite()->getGlobalBounds()))
+				{
+					// Reload Game
+					std::cout << "RELOADDDDDDDDDDDDDDDDDDDDDDDDDDD" << std::endl;
+					player->SetHealth(0);
+					Reload(score, highScore, playerLife, player, window, enemies, asteroids, enemybosses);
+					scoreText.setString("Score: " + std::to_string(score));
+					lifeText.setString("Life: " + std::to_string(playerLife));
+					highScoreText.setString("Highscore: " + std::to_string(highScore));
+					break;
+				}
+
+				// Check if the enemybosses collides with the player projectiles
+				for (int k = 0; k < player->GetProjectileList().size(); k++)
+				{
+					if (enemybosses[i]->GetSprite()->getGlobalBounds().intersects(player->GetProjectileList()[k]->GetSprite()->getGlobalBounds()))
+					{
+						// Delete the player projectile that hits the enemy
+						delete(player->GetProjectileList()[k]);
+						player->GetProjectileList()[k] = nullptr;
+						player->GetProjectileList().erase(player->GetProjectileList().begin() + k);
+
+						// Just to be safe
+						if (enemybosses[i]->GetHealth() > 0)
+						{
+							// Calculate the health remaining
+							enemybosses[i]->SetHealth(enemybosses[i]->GetHealth() - 1);
+
+							// Add it to toBeDeleted it if its health is below 0
+							if (enemybosses[i]->GetHealth() <= 0)
+							{
+								toBeDeleted.push_back(i);
+								score += enemybosses[i]->GetScore();
+							}
+						}
+					}
+				}
+
+			}
+		}
+
+		// Clear the enemybosses list
+		for (int k = 0; k < toBeDeleted.size(); k++)
+		{
+			delete(enemybosses[toBeDeleted[k]]);
+			enemybosses[toBeDeleted[k]] = nullptr;
+			enemybosses.erase(enemybosses.begin() + toBeDeleted[k]);
+		}
+		toBeDeleted.clear();
+
+		// See if the enemyboss projectile hits the player
+		for (int i = 0; i < enemybosses.size(); i++)
+		{
+			for (int j = 0; j < enemybosses[i]->GetProjectileList().size(); j++)
+			{
+				if (enemybosses[i]->GetProjectileList()[j]->GetSprite()->getGlobalBounds().intersects(player->GetSprite()->getGlobalBounds()))
+				{
+					// Calculate the player life remaining
+					player->SetHealth(player->GetHealth() - 1);
+					playerLife -= 1;
+					lifeText.setString("Life: " + std::to_string(playerLife));
+
+					// Detroy the enemy projectile that hits the player
+					delete(enemybosses[i]->GetProjectileList()[j]);
+					enemybosses[i]->GetProjectileList()[j] = nullptr;
+					enemybosses[i]->GetProjectileList().erase(enemybosses[i]->GetProjectileList().begin() + j);
+
+					// Reload the game if the player dies
+					if (player->GetHealth() <= 0)
+					{
+						Reload(score, highScore, playerLife, player, window, enemies, asteroids, enemybosses);
+						scoreText.setString("Score: " + std::to_string(score));
+						lifeText.setString("Life: " + std::to_string(playerLife));
+						highScoreText.setString("Highscore: " + std::to_string(highScore));
+						break;
+					}
+				}
+			}
+		}
+
+		// Delete stars out of bounds
+		for (int i = 0; i < stars.size(); i++)
+		{
+			if (stars[i]->GetSprite()->getPosition().y >= window->getSize().y * 0.5f)
+			{
+				delete(stars[i]);
+				stars[i] = nullptr;
+				stars.erase(stars.begin() + i);
+			}
+		}
 
 		// Delete asteroids out of bounds
 		for (int i = 0; i < asteroids.size(); i++)
@@ -339,6 +517,17 @@ int main()
 				delete(enemies[i]);
 				enemies[i] = nullptr;
 				enemies.erase(enemies.begin() + i);
+			}
+		}
+
+		// Delete enemybosses out of bounds
+		for (int i = 0; i < enemybosses.size(); i++)
+		{
+			if (enemybosses[i]->GetSprite()->getPosition().y >= window->getSize().y * 0.5f)
+			{
+				delete(enemybosses[i]);
+				enemybosses[i] = nullptr;
+				enemybosses.erase(enemybosses.begin() + i);
 			}
 		}
 
@@ -363,10 +552,22 @@ int main()
 		enemies[i] = nullptr;
 	}
 
+	for (int i = 0; i < enemybosses.size(); i++)
+	{
+		delete enemybosses[i];
+		enemybosses[i] = nullptr;
+	}
+
 	for (int i = 0; i < asteroids.size(); i++)
 	{
 		delete asteroids[i];
 		asteroids[i] = nullptr;
+	}
+
+	for (int i = 0; i < stars.size(); i++)
+	{
+		delete stars[i];
+		stars[i] = nullptr;
 	}
 
 	delete player;

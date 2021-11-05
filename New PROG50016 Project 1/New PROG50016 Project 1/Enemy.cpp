@@ -3,6 +3,11 @@
 #include <random>
 #include <iostream>
 
+Enemy::Enemy()
+{
+
+}
+
 Enemy::Enemy(sf::RenderWindow* window)
 {
 	std::random_device ranDev;

@@ -12,7 +12,7 @@ EventController::~EventController()
 }
 
 // Should do the delete events on the Game Manager instead. See if I have time to implement it
-void EventController::HandleEvents(sf::Event event, sf::RenderWindow* window, Player* player, std::vector<Enemy*>& enemies, std::vector<Asteroid*>& asteroids)
+void EventController::HandleEvents(sf::Event event, sf::RenderWindow* window, Player* player, std::vector<Enemy*>& enemies, std::vector<Asteroid*>& asteroids, std::vector<Star*>& stars)
 {
 	switch (event.type)
 	{
@@ -42,10 +42,6 @@ void EventController::HandleEvents(sf::Event event, sf::RenderWindow* window, Pl
 		{
 			player->SetYMoveSpeed(-5.0f);
 			std::cout << "W" << std::endl;
-			//std::cout << "control: " << event.key.control << std::endl;
-			//std::cout << "alt: " << event.key.alt << std::endl;
-			//std::cout << "shift: " << event.key.shift << std::endl;
-			//std::cout << "system: " << event.key.system << std::endl;
 		}
 		// If A key is pressed
 		if (event.key.code == sf::Keyboard::A)
@@ -110,6 +106,12 @@ void EventController::HandleEvents(sf::Event event, sf::RenderWindow* window, Pl
 				delete asteroids[i];
 				asteroids[i] = nullptr;
 			}
+			for (int i = 0; i < stars.size(); i++)
+			{
+				delete stars[i];
+				stars[i] = nullptr;
+			}
+
 			delete window;
 			window = nullptr;
 			//return 0;

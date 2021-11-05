@@ -6,6 +6,8 @@ class Enemy : public Ship
 {
 public:
 	// Constructor / Destructor
+	Enemy();
+
 	Enemy(sf::RenderWindow* window);
 
 	~Enemy();
@@ -20,7 +22,7 @@ public:
 
 	void Shoot(sf::RenderWindow* window);
 
-private:
+protected:
 	bool m_isShip = false;
 
 	int m_shootTimer = 0;

@@ -1,8 +1,8 @@
 #ifndef ASTEROID_H
 #define ASTEROID_H
-#include "Object.h"
+#include "Star.h"
 
-class Asteroid : public Object
+class Asteroid : public Star
 {
 public:
 	// Constructor / Destructor

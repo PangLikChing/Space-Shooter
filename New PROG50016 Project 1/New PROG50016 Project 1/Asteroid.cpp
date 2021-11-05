@@ -4,7 +4,6 @@
 
 Asteroid::Asteroid(sf::RenderWindow* window)
 {
-
 	std::random_device ranDev;
 	std::mt19937 rng(ranDev());
 	std::uniform_int_distribution<std::mt19937::result_type> dist2(0, 1);
