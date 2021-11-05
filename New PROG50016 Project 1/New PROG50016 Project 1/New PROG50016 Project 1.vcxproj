@@ -151,7 +151,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Asteroid.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyProjectile.cpp" />
     <ClCompile Include="EventController.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
@@ -160,7 +162,9 @@
     <ClCompile Include="Ship.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Asteroid.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyProjectile.h" />
     <ClInclude Include="EventController.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Player.h" />

@@ -11,19 +11,9 @@ Ship::~Ship()
 	std::cout << "Ship destroyed" << std::endl;
 }
 
-int Ship::GetHealth()
-{
-	return m_health;
-}
-
 std::vector<Projectile*> Ship::GetProjectileList()
 {
 	return m_projectiles;
-}
-
-void Ship::SetHealth(int _health)
-{
-	m_health = _health;
 }
 
 void Ship::PushProjectile(Projectile* _projectile)

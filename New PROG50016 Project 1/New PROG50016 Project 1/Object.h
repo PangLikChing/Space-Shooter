@@ -12,20 +12,10 @@ public:
 	~Object();
 
 	// Methods
-	std::string GetName();
-	std::string GetTextureName();
-	float GetMovespeed();
-	sf::Sprite* GetSprite();
-
-	void SetName(std::string _name);
-	void SetTextureName(std::string _textureName);
-	void SetMovespeed(float _movespeed);
-	void SetSprite(sf::Sprite* _sprite);
-
 	virtual void Move();
 	virtual int DrawObject(sf::RenderWindow* window);
 
-private:
+protected:
 	// Members
 	std::string m_name = "";
 	std::string m_textureName = "";

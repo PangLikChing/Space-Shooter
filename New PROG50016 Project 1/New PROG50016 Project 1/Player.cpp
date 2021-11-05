@@ -5,16 +5,16 @@
 Player::Player()
 {
 	// Loading image texture
-	Object::SetName("Player");
-	Object::SetTextureName("Player.png");
-	Ship::SetHealth(3);
+	m_name = "Player";
+	m_textureName = "Player.png";
+	m_health = 3;
 
 	sf::Sprite* sprite = new sf::Sprite;
 
-	Object::SetSprite(sprite);
+	m_sprite = sprite;
 
 	std::cout << "Player created" << std::endl;
-	//std::cout << "Player has " << GetHealth() << " Health" << std::endl;
+	std::cout << "Player has " << m_health << " Health" << std::endl;
 }
 
 Player::~Player()
@@ -46,28 +46,34 @@ int Player::DrawObject(sf::RenderWindow* window)
 {
 	sf::Texture texture;
 	// If this failed
-	if (texture.loadFromFile(Object::GetTextureName()) == false)
+	if (texture.loadFromFile(m_textureName) == false)
 	{
 		return 0;
 	}
 
-	GetSprite()->setTexture(texture);
-	GetSprite()->move(m_xMovespeed, m_yMovespeed);
+	m_sprite->setTexture(texture);
+	m_sprite->move(m_xMovespeed, m_yMovespeed);
 
-	window->draw(*GetSprite());
+	window->draw(*m_sprite);
 	return 1;
 }
 
-void Player::Move()
+void Player::Shoot(sf::RenderWindow* window)
 {
-	//SetPosition(sf::Vector2f(GetPosition().x + m_xMovespeed, GetPosition().y + m_yMovespeed));
-}
+	Projectile* projectile = new Projectile(m_sprite->getPosition());
+	PushProjectile(projectile);
+	
+	// Delete the useless projectiles on shoot
+	// Can also do a pass by reference for loop in main. But looping every frame doesn't seem good to me
+	for (int i = 0; i < m_projectiles.size(); i++)
+	{
+		if (m_projectiles[i]->GetSprite()->getPosition().y < -(window->getSize().y * 0.5))
+		{
+			delete(m_projectiles[i]);
+			m_projectiles[i] = nullptr;
+			m_projectiles.erase(m_projectiles.begin() + i);
+		}
+	}
 
-//void Player::Shoot(sf::RenderWindow* window)
-//{
-//	Projectile* projectile = new Projectile();
-//	PushProjectile(projectile);
-//	projectile->DrawObject(window, GetSprite()->getPosition());
-//
-//	std::cout << "Player Shooting" << std::endl;
-//}
+	std::cout << "Player Shooting" << std::endl;
+}

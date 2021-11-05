@@ -19,9 +19,7 @@ public:
 	// Methods
 	int DrawObject(sf::RenderWindow* window) override;
 
-	void Move() override;
-
-	//void Shoot(sf::RenderWindow* window) override;
+	void Shoot(sf::RenderWindow* window) override;
 
 private:
 	// Members

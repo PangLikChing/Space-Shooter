@@ -11,13 +11,26 @@ EventController::~EventController()
 	std::cout << "EventController Destroyed" << std::endl;
 }
 
-void EventController::HandleEvents(sf::Event event, sf::RenderWindow* window, Player* player)
+// Should do the delete events on the Game Manager instead. See if I have time to implement it
+void EventController::HandleEvents(sf::Event event, sf::RenderWindow* window, Player* player, std::vector<Enemy*>& enemies, std::vector<Asteroid*>& asteroids)
 {
 	switch (event.type)
 	{
 		// If the user close the window
 	case sf::Event::Closed:
 		window->close();
+		delete player;
+		player = nullptr;
+		for (int i = 0; i < enemies.size(); i++)
+		{
+			delete enemies[i];
+			enemies[i] = nullptr;
+		}
+		for (int i = 0; i < asteroids.size(); i++)
+		{
+			delete asteroids[i];
+			asteroids[i] = nullptr;
+		}
 		delete window;
 		window = nullptr;
 		//return 0;
@@ -78,13 +91,25 @@ void EventController::HandleEvents(sf::Event event, sf::RenderWindow* window, Pl
 		// If spacebar is released
 		if (event.key.code == sf::Keyboard::Space)
 		{
-			//player->Shoot(window);
+			player->Shoot(window);
 		}
 		// If esc is released
 		if (event.key.code == sf::Keyboard::Escape)
 		{
 			// Quit game
 			window->close();
+			delete player;
+			player = nullptr;
+			for (int i = 0; i < enemies.size(); i++)
+			{
+				delete enemies[i];
+				enemies[i] = nullptr;
+			}
+			for (int i = 0; i < asteroids.size(); i++)
+			{
+				delete asteroids[i];
+				asteroids[i] = nullptr;
+			}
 			delete window;
 			window = nullptr;
 			//return 0;
@@ -96,7 +121,7 @@ void EventController::HandleEvents(sf::Event event, sf::RenderWindow* window, Pl
 		// If left mouse button is pressed
 		if (event.mouseButton.button == sf::Mouse::Left)
 		{
-			//player->Shoot(window);
+			player->Shoot(window);
 			std::cout << "Left Mouse Button was Pressed" << std::endl;
 
 			//auto mousePosition = sf::Mouse::getPosition(*window);

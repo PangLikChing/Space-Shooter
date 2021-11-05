@@ -11,16 +11,14 @@ public:
 
 	~Ship();
 
-	// Methods
-	int GetHealth();
 	std::vector<Projectile*> GetProjectileList();
 
-	void SetHealth(int _health);
+	// Methods
 	void PushProjectile(Projectile* _projectile);
 
 	virtual void Shoot(sf::RenderWindow* window);
 
-private:
+protected:
 	// Members
 	int m_health = 0;
 	std::vector<Projectile*> m_projectiles;

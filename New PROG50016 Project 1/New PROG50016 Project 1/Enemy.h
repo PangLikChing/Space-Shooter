@@ -10,13 +10,20 @@ public:
 
 	~Enemy();
 
-	bool GetIsShip();
+	sf::Sprite* GetSprite();
+
+	int GetShootTimer();
+	void SetShootTimer(int _shootTimer);
 
 	// Methods
 	int DrawObject(sf::RenderWindow* window) override;
 
+	void Shoot(sf::RenderWindow* window);
+
 private:
 	bool m_isShip = false;
+
+	int m_shootTimer = 0;
 };
 
 #endif // !ENEMY_H
