@@ -37,6 +37,16 @@ Asteroid::~Asteroid()
 	std::cout << "Asteroid destroyed" << std::endl;
 }
 
+int& Asteroid::GetHealth()
+{
+	return m_health;
+}
+
+void Asteroid::SetHealth(int _health)
+{
+	m_health = _health;
+}
+
 int Asteroid::DrawObject(sf::RenderWindow* window)
 {
 	// Loading image texture

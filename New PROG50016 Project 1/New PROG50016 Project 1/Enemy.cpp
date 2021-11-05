@@ -14,6 +14,7 @@ Enemy::Enemy(sf::RenderWindow* window)
 	{
 		m_name = "EnemyShip";
 		m_textureName = "enemyShip.png";
+		m_score = 1;
 		m_movespeed = 5.0f;
 		m_health = 1;
 	}
@@ -21,6 +22,7 @@ Enemy::Enemy(sf::RenderWindow* window)
 	{
 		m_name = "EnemyUFO";
 		m_textureName = "enemyUFO.png";
+		m_score = 3;
 		m_movespeed = 2.0f;
 		m_health = 2;
 	}
@@ -35,7 +37,16 @@ Enemy::Enemy(sf::RenderWindow* window)
 
 Enemy::~Enemy()
 {
+	for (int i = 0; i < m_projectiles.size(); i++)
+	{
+		delete(m_projectiles[i]);
+	}
 	std::cout << "Enemy destroyed" << std::endl;
+}
+
+int& Enemy::GetScore()
+{
+	return m_score;
 }
 
 int Enemy::GetShootTimer()

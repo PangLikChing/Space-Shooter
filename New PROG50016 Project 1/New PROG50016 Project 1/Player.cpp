@@ -19,6 +19,10 @@ Player::Player()
 
 Player::~Player()
 {
+	for (int i = 0; i < m_projectiles.size(); i++)
+	{
+		delete(m_projectiles[i]);
+	}
 	std::cout << "Player destroyed" << std::endl;
 }
 

@@ -1,12 +1,16 @@
 ﻿  main.cpp
-C:\Users\HappyHarvey\Desktop\New PROG50016 Project 1\New PROG50016 Project 1\New PROG50016 Project 1\main.cpp(13,71): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-C:\Users\HappyHarvey\Desktop\New PROG50016 Project 1\New PROG50016 Project 1\New PROG50016 Project 1\main.cpp(13,64): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-C:\Users\HappyHarvey\Desktop\New PROG50016 Project 1\New PROG50016 Project 1\New PROG50016 Project 1\main.cpp(91,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\HappyHarvey\Desktop\New PROG50016 Project 1\New PROG50016 Project 1\New PROG50016 Project 1\main.cpp(100,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\HappyHarvey\Desktop\New PROG50016 Project 1\New PROG50016 Project 1\New PROG50016 Project 1\main.cpp(124,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\HappyHarvey\Desktop\New PROG50016 Project 1\New PROG50016 Project 1\New PROG50016 Project 1\main.cpp(141,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\HappyHarvey\Desktop\New PROG50016 Project 1\New PROG50016 Project 1\New PROG50016 Project 1\main.cpp(152,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\HappyHarvey\Desktop\New PROG50016 Project 1\New PROG50016 Project 1\New PROG50016 Project 1\main.cpp(174,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\HappyHarvey\Desktop\New PROG50016 Project 1\New PROG50016 Project 1\New PROG50016 Project 1\main.cpp(191,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\HappyHarvey\Desktop\New PROG50016 Project 1\New PROG50016 Project 1\New PROG50016 Project 1\main.cpp(196,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\HappyHarvey\Desktop\New PROG50016 Project 1\New PROG50016 Project 1\New PROG50016 Project 1\main.cpp(33,71): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Users\HappyHarvey\Desktop\New PROG50016 Project 1\New PROG50016 Project 1\New PROG50016 Project 1\main.cpp(33,64): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Users\HappyHarvey\Desktop\New PROG50016 Project 1\New PROG50016 Project 1\New PROG50016 Project 1\main.cpp(122,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\HappyHarvey\Desktop\New PROG50016 Project 1\New PROG50016 Project 1\New PROG50016 Project 1\main.cpp(132,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\HappyHarvey\Desktop\New PROG50016 Project 1\New PROG50016 Project 1\New PROG50016 Project 1\main.cpp(144,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\HappyHarvey\Desktop\New PROG50016 Project 1\New PROG50016 Project 1\New PROG50016 Project 1\main.cpp(172,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\HappyHarvey\Desktop\New PROG50016 Project 1\New PROG50016 Project 1\New PROG50016 Project 1\main.cpp(182,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\HappyHarvey\Desktop\New PROG50016 Project 1\New PROG50016 Project 1\New PROG50016 Project 1\main.cpp(205,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\HappyHarvey\Desktop\New PROG50016 Project 1\New PROG50016 Project 1\New PROG50016 Project 1\main.cpp(224,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\HappyHarvey\Desktop\New PROG50016 Project 1\New PROG50016 Project 1\New PROG50016 Project 1\main.cpp(236,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\HappyHarvey\Desktop\New PROG50016 Project 1\New PROG50016 Project 1\New PROG50016 Project 1\main.cpp(263,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\HappyHarvey\Desktop\New PROG50016 Project 1\New PROG50016 Project 1\New PROG50016 Project 1\main.cpp(272,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\HappyHarvey\Desktop\New PROG50016 Project 1\New PROG50016 Project 1\New PROG50016 Project 1\main.cpp(297,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\HappyHarvey\Desktop\New PROG50016 Project 1\New PROG50016 Project 1\New PROG50016 Project 1\main.cpp(303,20): warning C4018: '<': signed/unsigned mismatch
   New PROG50016 Project 1.vcxproj -> C:\Users\HappyHarvey\Desktop\New PROG50016 Project 1\New PROG50016 Project 1\Debug\New PROG50016 Project 1.exe

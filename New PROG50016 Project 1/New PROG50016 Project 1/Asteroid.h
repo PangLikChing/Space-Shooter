@@ -10,6 +10,9 @@ public:
 
 	~Asteroid();
 
+	int& GetHealth();
+	void SetHealth(int _health);
+
 	// Methods
 	int DrawObject(sf::RenderWindow* window) override;
 

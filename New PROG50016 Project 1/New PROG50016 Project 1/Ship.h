@@ -11,6 +11,9 @@ public:
 
 	~Ship();
 
+	int& GetHealth();
+	void SetHealth(int _health);
+
 	std::vector<Projectile*>& GetProjectileList();
 
 	// Methods

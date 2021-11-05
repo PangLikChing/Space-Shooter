@@ -10,6 +10,8 @@ public:
 
 	~Enemy();
 
+	int& GetScore();
+
 	int GetShootTimer();
 	void SetShootTimer(int _shootTimer);
 
@@ -22,6 +24,8 @@ private:
 	bool m_isShip = false;
 
 	int m_shootTimer = 0;
+
+	int m_score = 0;
 };
 
 #endif // !ENEMY_H
