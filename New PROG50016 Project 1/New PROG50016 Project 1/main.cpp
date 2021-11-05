@@ -6,18 +6,40 @@
 #include "Enemy.h"
 #include "Asteroid.h"
 
-void Reload(int _playerLife, sf::RenderWindow* window)
+void Reload(int &_score, int &_highScore, int &_playerLife, Player* _player, sf::RenderWindow* window, std::vector<Enemy*> &_enemies, std::vector<Asteroid*> &_asteroids)
 {
-	if (_playerLife <= 0)
+	if (_player->GetHealth() <= 0)
 	{
+		// Update the highscore
+		if (_highScore < _score)
+		{
+			_highScore = _score;
+		}
+
+		// Reset the score and playerLife
+		_score = 0;
+		_playerLife = 3;
+		_player->SetHealth(3);
+
+		// Delete everything except the player
+		for (int i = 0; i < _enemies.size(); i++)
+		{
+			delete _enemies[i];
+			_enemies[i] = nullptr;
+		}
+
+		for (int i = 0; i < _asteroids.size(); i++)
+		{
+			delete _asteroids[i];
+			_asteroids[i] = nullptr;
+		}
+
+		_enemies.clear();
+		_asteroids.clear();
+		// Reset Player position
+		_player->GetSprite()->setPosition(0, 0);
 		// Reload the game
 		window->clear();
-
-		// Reset the score
-
-
-		// Update the highscore
-		// Delete everything except the player
 	}
 }
 
@@ -47,7 +69,7 @@ int main()
 	// Loading image texture
 	sf::Texture backgroundTexture;
 	// If this failed
-	if (backgroundTexture.loadFromFile("starBackground.png") == false)
+	if (backgroundTexture.loadFromFile("backgroundColor.png") == false)
 	{
 		return 0;
 	}
@@ -134,12 +156,17 @@ int main()
 			if (asteroids[i] != nullptr)
 			{
 				asteroids[i]->DrawObject(window);
+
 				// See if the asteroids collides with the player
 				if (asteroids[i]->GetSprite()->getGlobalBounds().intersects(player->GetSprite()->getGlobalBounds()))
 				{
-					//std::cout << "RELOADDDDDDDDDDDDDDDDDDDDDDDDDDD" << std::endl;
-					toBeDeleted.push_back(i);
+					std::cout << "RELOADDDDDDDDDDDDDDDDDDDDDDDDDDD" << std::endl;
+					player->SetHealth(0);
+					Reload(score, highScore, playerLife, player, window, enemies, asteroids);
+					highScoreText.setString("Highscore: " + std::to_string(highScore));
+					break;
 				}
+
 				// See if the asteroids collides with the player projectile
 				for (int j = 0; j < player->GetProjectileList().size(); j++)
 				{
@@ -168,6 +195,7 @@ int main()
 				}
 			}
 		}
+
 		// Clear the asteroids list
 		for (int k = 0; k < toBeDeleted.size(); k++)
 		{
@@ -175,17 +203,36 @@ int main()
 			asteroids[toBeDeleted[k]] = nullptr;
 			asteroids.erase(asteroids.begin() + toBeDeleted[k]);
 		}
+
 		// Clear the toBeDeleted list
 		toBeDeleted.clear();
 
-		// Delete asteroids out of bounds
-		for (int i = 0; i < asteroids.size(); i++)
+		// See if the enemy projectile hits the player
+		for (int i = 0; i < enemies.size(); i++)
 		{
-			if (asteroids[i]->GetSprite()->getPosition().y >= window->getSize().y * 0.5f)
+			for (int j = 0; j < enemies[i]->GetProjectileList().size(); j++)
 			{
-				delete(asteroids[i]);
-				asteroids[i] = nullptr;
-				asteroids.erase(asteroids.begin() + i);
+				if (enemies[i]->GetProjectileList()[j]->GetSprite()->getGlobalBounds().intersects(player->GetSprite()->getGlobalBounds()))
+				{
+					// Calculate the player life remaining
+					player->SetHealth(player->GetHealth() - 1);
+					playerLife -= 1;
+					lifeText.setString("Life: " + std::to_string(playerLife));
+					
+					// Detroy the enemy projectile that hits the player
+					delete(enemies[i]->GetProjectileList()[j]);
+					enemies[i]->GetProjectileList()[j] = nullptr;
+					enemies[i]->GetProjectileList().erase(enemies[i]->GetProjectileList().begin() + j);
+
+					// Reload the game if the player dies
+					if (player->GetHealth() <= 0)
+					{
+						Reload(score, highScore, playerLife, player, window, enemies, asteroids);
+						break;
+					}
+
+					std::cout << "Get Got" << std::endl;
+				}
 			}
 		}
 
@@ -225,13 +272,18 @@ int main()
 				{
 					enemies[i]->GetProjectileList()[j]->DrawObject(window);
 				}
+
 				// Check if the enemy collides with the player
 				if (enemies[i]->GetSprite()->getGlobalBounds().intersects(player->GetSprite()->getGlobalBounds()))
 				{
 					// Reload Game
 					std::cout << "RELOADDDDDDDDDDDDDDDDDDDDDDDDDDD" << std::endl;
-					toBeDeleted.push_back(i);
+					player->SetHealth(0);
+					Reload(score, highScore, playerLife, player, window, enemies, asteroids);
+					highScoreText.setString("Highscore: " + std::to_string(highScore));
+					break;
 				}
+
 				// Check if the enemy collides with the player projectiles
 				for (int k = 0; k < player->GetProjectileList().size(); k++)
 				{
@@ -241,6 +293,7 @@ int main()
 						delete(player->GetProjectileList()[k]);
 						player->GetProjectileList()[k] = nullptr;
 						player->GetProjectileList().erase(player->GetProjectileList().begin() + k);
+
 						// Just to be safe
 						if (enemies[i]->GetHealth() > 0)
 						{
@@ -252,7 +305,6 @@ int main()
 							{
 								toBeDeleted.push_back(i);
 								score += enemies[i]->GetScore();
-								std::cout << "Score is " << score << std::endl;
 							}
 						}
 					}
@@ -268,7 +320,18 @@ int main()
 		}
 		toBeDeleted.clear();
 
-		// Delete useless enemies
+		// Delete asteroids out of bounds
+		for (int i = 0; i < asteroids.size(); i++)
+		{
+			if (asteroids[i]->GetSprite()->getPosition().y >= window->getSize().y * 0.5f)
+			{
+				delete(asteroids[i]);
+				asteroids[i] = nullptr;
+				asteroids.erase(asteroids.begin() + i);
+			}
+		}
+
+		// Delete enemies out of bounds
 		for (int i = 0; i < enemies.size(); i++)
 		{
 			if (enemies[i]->GetSprite()->getPosition().y >= window->getSize().y * 0.5f)
