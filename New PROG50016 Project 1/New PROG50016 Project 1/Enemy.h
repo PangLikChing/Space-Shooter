@@ -10,8 +10,6 @@ public:
 
 	~Enemy();
 
-	sf::Sprite* GetSprite();
-
 	int GetShootTimer();
 	void SetShootTimer(int _shootTimer);
 

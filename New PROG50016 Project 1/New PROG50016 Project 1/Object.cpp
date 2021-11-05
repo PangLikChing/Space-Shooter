@@ -11,6 +11,11 @@ Object::~Object()
 	std::cout << "Object destroyed" << std::endl;
 }
 
+sf::Sprite* Object::GetSprite()
+{
+	return m_sprite;
+}
+
 void Object::Move()
 {
 }

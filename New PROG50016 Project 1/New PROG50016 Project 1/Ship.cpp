@@ -11,7 +11,7 @@ Ship::~Ship()
 	std::cout << "Ship destroyed" << std::endl;
 }
 
-std::vector<Projectile*> Ship::GetProjectileList()
+std::vector<Projectile*>& Ship::GetProjectileList()
 {
 	return m_projectiles;
 }

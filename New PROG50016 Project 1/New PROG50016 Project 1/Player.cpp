@@ -69,7 +69,7 @@ void Player::Shoot(sf::RenderWindow* window)
 	{
 		if (m_projectiles[i]->GetSprite()->getPosition().y < -(window->getSize().y * 0.5))
 		{
-			delete(m_projectiles[i]);
+ 			delete(m_projectiles[i]);
 			m_projectiles[i] = nullptr;
 			m_projectiles.erase(m_projectiles.begin() + i);
 		}

@@ -11,6 +11,8 @@ public:
 
 	~Object();
 
+	sf::Sprite* GetSprite();
+
 	// Methods
 	virtual void Move();
 	virtual int DrawObject(sf::RenderWindow* window);

@@ -91,6 +91,22 @@ int main()
 		for (int i = 0; i < asteroids.size(); i++)
 		{
 			asteroids[i]->DrawObject(window);
+			// See if the asteroids collides with the player
+			if (asteroids[i]->GetSprite()->getGlobalBounds().intersects(player->GetSprite()->getGlobalBounds()))
+			{
+				std::cout << "RELOADDDDDDDDDDDDDDDDDDDDDDDDDDD" << std::endl;
+			}
+			// See if the assteroids collides with the player projectile
+			for (int j = 0; j < player->GetProjectileList().size(); j++)
+			{
+				if (asteroids[i]->GetSprite()->getGlobalBounds().intersects(player->GetProjectileList()[j]->GetSprite()->getGlobalBounds()))
+				{
+					std::cout << "HIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII" << std::endl;
+					delete(player->GetProjectileList()[j]);
+					player->GetProjectileList()[j] = nullptr;
+					player->GetProjectileList().erase(player->GetProjectileList().begin() + j);
+				}
+			}
 		}
 
 		// Spawn enemies every 2 second
@@ -125,6 +141,23 @@ int main()
 			for (int j = 0; j < enemies[i]->GetProjectileList().size(); j++)
 			{
 				enemies[i]->GetProjectileList()[j]->DrawObject(window);
+			}
+			// Check if the enemy collides with the player
+			if (enemies[i]->GetSprite()->getGlobalBounds().intersects(player->GetSprite()->getGlobalBounds()))
+			{
+				// Reload Game
+				std::cout << "RELOADDDDDDDDDDDDDDDDDDDDDDDDDDD" << std::endl;
+			}
+			// Check if the enemy collides with the player projectiles
+			for (int k = 0; k < player->GetProjectileList().size(); k++)
+			{
+				if (enemies[i]->GetSprite()->getGlobalBounds().intersects(player->GetProjectileList()[k]->GetSprite()->getGlobalBounds()))
+				{
+					std::cout << "HIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII" << std::endl;
+					delete(player->GetProjectileList()[k]);
+					player->GetProjectileList()[k] = nullptr;
+					player->GetProjectileList().erase(player->GetProjectileList().begin() + k);
+				}
 			}
 
 			// Delete useless enemies

@@ -11,7 +11,7 @@ public:
 
 	~Ship();
 
-	std::vector<Projectile*> GetProjectileList();
+	std::vector<Projectile*>& GetProjectileList();
 
 	// Methods
 	void PushProjectile(Projectile* _projectile);

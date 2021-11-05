@@ -38,11 +38,6 @@ Enemy::~Enemy()
 	std::cout << "Enemy destroyed" << std::endl;
 }
 
-sf::Sprite* Enemy::GetSprite()
-{
-	return m_sprite;
-}
-
 int Enemy::GetShootTimer()
 {
 	return m_shootTimer;
