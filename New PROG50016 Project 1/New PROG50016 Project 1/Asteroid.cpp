@@ -1,6 +1,8 @@
 #include "Asteroid.h"
 #include <iostream>
+#include "json.hpp"
 #include <random>
+#include <fstream>
 
 Asteroid::Asteroid(sf::RenderWindow* window)
 {
@@ -11,17 +13,25 @@ Asteroid::Asteroid(sf::RenderWindow* window)
 
 	if (m_isBig == true)
 	{
-		m_name = "AsteroidBig";
-		m_textureName = "meteorBig.png";
-		m_movespeed = 0.5f;
-		m_health = 3;
+		std::ifstream inputStream("./JSON/AsteroidBig.json");
+		std::string str((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>());
+		json::JSON document = json::JSON::Load(str);
+
+		m_name = document["name"].ToString();
+		m_textureName = document["texture"].ToString();
+		m_movespeed = document["movespeed"].ToFloat();
+		m_health = document["health"].ToInt();
 	}
 	else
 	{
-		m_name = "AsteroidSmall";
-		m_textureName = "meteorSmall.png";
-		m_movespeed = 0.5f;
-		m_health = 1;
+		std::ifstream inputStream("./JSON/AsteroidSmall.json");
+		std::string str((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>());
+		json::JSON document = json::JSON::Load(str);
+
+		m_name = document["name"].ToString();
+		m_textureName = document["texture"].ToString();
+		m_movespeed = document["movespeed"].ToFloat();
+		m_health = document["health"].ToInt();
 	}
 
 	sf::Sprite* sprite = new sf::Sprite;

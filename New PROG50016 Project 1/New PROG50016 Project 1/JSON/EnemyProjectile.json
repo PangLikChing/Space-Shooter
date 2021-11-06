@@ -1,0 +1,5 @@
+{
+    "name": "EnemyProjectile",
+    "texture": "./Assets/Textures/laserGreen.png",
+    "movespeed": 10.0
+}

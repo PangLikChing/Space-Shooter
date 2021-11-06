@@ -1,6 +1,8 @@
 #include "Star.h"
 #include <iostream>
+#include "json.hpp"
 #include <random>
+#include <fstream>
 
 Star::Star()
 {
@@ -15,24 +17,36 @@ Star::Star(sf::RenderWindow* window)
 
 	if (dist3(rng) == 0)
 	{
-		m_name = "StarBig";
-		m_textureName = "starBig.png";
-		m_isBig = true;
-		m_movespeed = 0.5f;
+		std::ifstream inputStream("./JSON/StarBig.json");
+		std::string str((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>());
+		json::JSON document = json::JSON::Load(str);
+
+		m_name = document["name"].ToString();
+		m_textureName = document["textureName"].ToString();
+		m_isBig = document["isBig"].ToBool();
+		m_movespeed = document["movespeed"].ToFloat();
 	}
 	else if (dist3(rng) == 1)
 	{
-		m_name = "StarSmall";
-		m_textureName = "starSmall.png";
-		m_isBig = false;
-		m_movespeed = 0.5f;
+		std::ifstream inputStream("./JSON/StarSmall.json");
+		std::string str((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>());
+		json::JSON document = json::JSON::Load(str);
+
+		m_name = document["name"].ToString();
+		m_textureName = document["textureName"].ToString();
+		m_isBig = document["isBig"].ToBool();
+		m_movespeed = document["movespeed"].ToFloat();
 	}
 	else
 	{
-		m_name = "Cloud";
-		m_textureName = "nebula.png";
-		m_isBig = false;
-		m_movespeed = 0.5f;
+		std::ifstream inputStream("./JSON/Cloud.json");
+		std::string str((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>());
+		json::JSON document = json::JSON::Load(str);
+
+		m_name = document["name"].ToString();
+		m_textureName = document["textureName"].ToString();
+		m_isBig = document["isBig"].ToBool();
+		m_movespeed = document["movespeed"].ToFloat();
 	}
 
 	sf::Sprite* sprite = new sf::Sprite;

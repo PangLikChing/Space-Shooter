@@ -1,0 +1,7 @@
+{
+    "name": "EnemyUFO",
+    "texture": "./Assets/Textures/enemyUFO.png",
+    "score": 3,
+    "movespeed": 2.0,
+    "health": 3
+}

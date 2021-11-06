@@ -1,5 +1,7 @@
 #include "Projectile.h"
+#include "json.hpp"
 #include <iostream>
+#include <fstream>
 
 Projectile::Projectile()
 {
@@ -8,9 +10,13 @@ Projectile::Projectile()
 
 Projectile::Projectile(sf::Vector2f _position)
 {
-	m_name = "Projectile";
-	m_textureName = "laserRed.png";
-	m_movespeed = -10.0f;
+	std::ifstream inputStream("./JSON/Projectile.json");
+	std::string str((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>());
+	json::JSON document = json::JSON::Load(str);
+
+	m_name = document["name"].ToString();
+	m_textureName = document["textureName"].ToString();
+	m_movespeed = document["movespeed"].ToInt();
 
 	sf::Sprite* sprite = new sf::Sprite;
 	sprite->setPosition(_position);

@@ -1,0 +1,6 @@
+{
+    "name": "Cloud",
+    "textureName": "./Assets/Textures/nebula.png",
+    "isBig": false,
+    "movespeed": 0.5
+}

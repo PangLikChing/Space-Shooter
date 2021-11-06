@@ -14,6 +14,9 @@ public:
 	~EventController();
 
 	void HandleEvents(sf::Event event, sf::RenderWindow* window, Player* player, std::vector<Enemy*>& enemies, std::vector<Asteroid*>& asteroids, std::vector<Star*>& stars);
+
+private:
+	float m_movespeed = 0;
 };
 
 #endif // !EVENTCONTROLLER_H

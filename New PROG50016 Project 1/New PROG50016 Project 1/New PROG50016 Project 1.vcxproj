@@ -156,6 +156,7 @@
     <ClCompile Include="EnemyBoss.cpp" />
     <ClCompile Include="EnemyProjectile.cpp" />
     <ClCompile Include="EventController.cpp" />
+    <ClCompile Include="json.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="EnemyBoss.h" />
     <ClInclude Include="EnemyProjectile.h" />
     <ClInclude Include="EventController.h" />
+    <ClInclude Include="json.hpp" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Projectile.h" />

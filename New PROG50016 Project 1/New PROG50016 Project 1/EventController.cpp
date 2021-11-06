@@ -1,8 +1,16 @@
 #include "EventController.h"
+#include "json.hpp"
 #include <iostream>
+#include <fstream>
 
 EventController::EventController()
 {
+	std::ifstream inputStream("./JSON/EventController.json");
+	std::string str((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>());
+	json::JSON document = json::JSON::Load(str);
+
+	m_movespeed = document["movespeed"].ToFloat();
+
 	std::cout << "EventController created" << std::endl;
 }
 
@@ -40,25 +48,25 @@ void EventController::HandleEvents(sf::Event event, sf::RenderWindow* window, Pl
 		// If W key is pressed
 		if (event.key.code == sf::Keyboard::W)
 		{
-			player->SetYMoveSpeed(-5.0f);
+			player->SetYMoveSpeed(-m_movespeed);
 			std::cout << "W" << std::endl;
 		}
 		// If A key is pressed
 		if (event.key.code == sf::Keyboard::A)
 		{
-			player->SetXMoveSpeed(-5.0f);
+			player->SetXMoveSpeed(-m_movespeed);
 			std::cout << "A" << std::endl;
 		}
 		// If S key is pressed
 		if (event.key.code == sf::Keyboard::S)
 		{
-			player->SetYMoveSpeed(5.0f);
+			player->SetYMoveSpeed(m_movespeed);
 			std::cout << "S" << std::endl;
 		}
 		// If D key is pressed
 		if (event.key.code == sf::Keyboard::D)
 		{
-			player->SetXMoveSpeed(5.0f);
+			player->SetXMoveSpeed(m_movespeed);
 			std::cout << "D" << std::endl;
 		}
 		break;
@@ -125,13 +133,6 @@ void EventController::HandleEvents(sf::Event event, sf::RenderWindow* window, Pl
 		{
 			player->Shoot(window);
 			std::cout << "Left Mouse Button was Pressed" << std::endl;
-
-			//auto mousePosition = sf::Mouse::getPosition(*window);
-			//auto mousePositionToolWindow = window->mapPixelToCoords(mousePosition);
-			//if (sprite.getGlobalBounds().contains(mousePositionToolWindow))
-			//{
-			//	std::cout << "Clicked the sprite" << std::endl;
-			//}
 		}
 		break;
 

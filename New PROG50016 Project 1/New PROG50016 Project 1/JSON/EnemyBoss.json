@@ -1,0 +1,9 @@
+{
+    "name": "EnemyBoss",
+    "texture": "./Assets/Textures/enemyUFO.png",
+    "score": "100",
+    "movespeed": 0.5,
+    "health": 10,
+    "scaleX": 4.0,
+    "scaleY": 4.0
+}

@@ -1,0 +1,7 @@
+{
+  "name": "SPACE SHOOTER!",
+  "width": 600.0,
+  "height": 768.0,
+  "background": "./Assets/Textures/starBackground.png",
+  "font": "./Assets/Font/courbd.ttf"
+}

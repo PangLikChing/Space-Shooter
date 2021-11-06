@@ -1,0 +1,6 @@
+{
+    "name": "AsteroidSmall",
+    "texture": "./Assets/Textures/meteorSmall.png",
+    "movespeed": 0.5,
+    "health": 1
+}

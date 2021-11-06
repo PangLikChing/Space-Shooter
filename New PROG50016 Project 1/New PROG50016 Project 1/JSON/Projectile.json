@@ -1,0 +1,5 @@
+{
+    "name": "Projectile",
+    "textureName": "./Assets/Textures/laserRed.png",
+    "movespeed": -10
+}

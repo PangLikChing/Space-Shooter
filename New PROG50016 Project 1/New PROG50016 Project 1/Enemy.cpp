@@ -1,7 +1,9 @@
 #include "Enemy.h"
 #include "EnemyProjectile.h"
+#include "json.hpp"
 #include <random>
 #include <iostream>
+#include <fstream>
 
 Enemy::Enemy()
 {
@@ -17,19 +19,27 @@ Enemy::Enemy(sf::RenderWindow* window)
 
 	if (m_isShip == true)
 	{
-		m_name = "EnemyShip";
-		m_textureName = "enemyShip.png";
-		m_score = 1;
-		m_movespeed = 5.0f;
-		m_health = 1;
+		std::ifstream inputStream("./JSON/EnemyShip.json");
+		std::string str((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>());
+		json::JSON document = json::JSON::Load(str);
+
+		m_name = document["name"].ToString();
+		m_textureName = document["texture"].ToString();
+		m_score = document["score"].ToInt();
+		m_movespeed = document["movespeed"].ToFloat();
+		m_health = document["health"].ToInt();
 	}
 	else
 	{
-		m_name = "EnemyUFO";
-		m_textureName = "enemyUFO.png";
-		m_score = 3;
-		m_movespeed = 2.0f;
-		m_health = 2;
+		std::ifstream inputStream("./JSON/EnemyUFO.json");
+		std::string str((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>());
+		json::JSON document = json::JSON::Load(str);
+
+		m_name = document["name"].ToString();
+		m_textureName = document["texture"].ToString();
+		m_score = document["score"].ToInt();
+		m_movespeed = document["movespeed"].ToFloat();
+		m_health = document["health"].ToInt();
 	}
 
 	sf::Sprite* sprite = new sf::Sprite;

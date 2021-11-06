@@ -1,11 +1,17 @@
 #include "EnemyProjectile.h"
+#include "json.hpp"
+#include <fstream>
 #include <iostream>
 
 EnemyProjectile::EnemyProjectile(sf::Vector2f _position)
 {
-	m_name = "EnemyProjectile";
-	m_textureName = "laserGreen.png";
-	m_movespeed = 10.0f;
+	std::ifstream inputStream("./JSON/EnemyProjectile.json");
+	std::string str((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>());
+	json::JSON document = json::JSON::Load(str);
+
+	m_name = document["name"].ToString();
+	m_textureName = document["texture"].ToString();
+	m_movespeed = document["movespeed"].ToFloat();
 
 	sf::Sprite* sprite = new sf::Sprite;
 	sprite->setPosition(_position);

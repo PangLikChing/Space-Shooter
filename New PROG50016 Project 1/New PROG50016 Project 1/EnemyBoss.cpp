@@ -1,16 +1,23 @@
 #include "EnemyBoss.h"
+#include "json.hpp"
 #include <iostream>
+#include <fstream>
 
 EnemyBoss::EnemyBoss(sf::RenderWindow* window)
 {
-	m_name = "EnemyBoss";
-	m_textureName = "enemyUFO.png";
-	m_score = 100;
-	m_movespeed = 0.5f;
-	m_health = 10;
+	std::ifstream inputStream("./JSON/EnemyBoss.json");
+	std::string str((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>());
+	json::JSON document = json::JSON::Load(str);
+
+	m_name = document["name"].ToString();
+	m_textureName = document["texture"].ToString();
+	m_score = document["score"].ToInt();
+	m_movespeed = document["movespeed"].ToFloat();
+	std::cout << m_movespeed << std::endl;
+	m_health = document["health"].ToInt();
 
 	sf::Sprite* sprite = new sf::Sprite;
-	sprite->setScale(4.0f, 4.0f);
+	sprite->setScale(document["scaleX"].ToFloat(), document["scaleY"].ToFloat());
 	sprite->setPosition(0, -(window->getSize().y * 0.5));
 
 	m_sprite = sprite;

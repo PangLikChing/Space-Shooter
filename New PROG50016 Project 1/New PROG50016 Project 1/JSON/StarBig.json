@@ -1,0 +1,6 @@
+{
+    "name": "StarBig",
+    "textureName": "./Assets/Textures/starBig.png",
+    "isBig": true,
+    "movespeed": 0.5
+}

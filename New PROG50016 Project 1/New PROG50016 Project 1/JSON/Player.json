@@ -1,0 +1,5 @@
+{
+    "name": "Player",
+    "textureName": "./Assets/Textures/Player.png",
+    "health": 3
+}

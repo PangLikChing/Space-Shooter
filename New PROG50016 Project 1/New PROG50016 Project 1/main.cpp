@@ -1,5 +1,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include "json.hpp"
+#include <fstream>
 #include <vector>
 #include "EventController.h"
 #include "Player.h"
@@ -53,13 +55,17 @@ void Reload(int &_score, int &_highScore, int &_playerLife, Player* _player, sf:
 // This is basically my game manager. Should have made a new class for it
 int main()
 {
+	std::ifstream inputStream("./JSON/Main.json");
+	std::string str((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>());
+	json::JSON document = json::JSON::Load(str);
+
 	int score = 0;
 	int highScore = 0;
 	int playerLife = 3;
 
 	sf::View view;
-	float width = 600.0f, height = 768.0f;
-	sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(width, height), "SPACE SHOOTER!");
+	float width = document["width"].ToFloat(), height = document["height"].ToFloat();
+	sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(width, height), document["name"].ToString());
 	float halfWidth = window->getSize().x * 0.5f;
 	float halfHeight = window->getSize().y * 0.5f;
 	view.reset(sf::FloatRect(-halfWidth, -halfHeight, halfWidth * 2.0f, halfHeight * 2.0f));
@@ -81,7 +87,7 @@ int main()
 	// Loading image texture
 	sf::Texture backgroundTexture;
 	// If this failed
-	if (backgroundTexture.loadFromFile("starBackground.png") == false)
+	if (backgroundTexture.loadFromFile(document["background"].ToString()) == false)
 	{
 		return 0;
 	}
@@ -94,7 +100,7 @@ int main()
 	// Loading text font
 	sf::Font font;
 	// If this failed
-	if (font.loadFromFile("courbd.ttf") == false)
+	if (font.loadFromFile(document["font"].ToString()) == false)
 	{
 		return 0;
 	}

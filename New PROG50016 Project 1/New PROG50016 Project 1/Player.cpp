@@ -1,13 +1,18 @@
 #include "Player.h"
-//#include "Projectile.h"
+#include "json.hpp"
 #include <iostream>
+#include <fstream>
 
 Player::Player()
 {
+	std::ifstream inputStream("./JSON/Player.json");
+	std::string str((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>());
+	json::JSON document = json::JSON::Load(str);
+
 	// Loading image texture
-	m_name = "Player";
-	m_textureName = "Player.png";
-	m_health = 3;
+	m_name = document["name"].ToString();
+	m_textureName = document["textureName"].ToString();
+	m_health = document["health"].ToInt();
 
 	sf::Sprite* sprite = new sf::Sprite;
 
