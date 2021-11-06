@@ -1,9 +1,0 @@
-﻿  EnemyBoss.cpp
-C:\Users\HappyHarvey\Desktop\New PROG50016 Project 1\New PROG50016 Project 1\New PROG50016 Project 1\json.hpp(282,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\HappyHarvey\Desktop\New PROG50016 Project 1\New PROG50016 Project 1\New PROG50016 Project 1\json.hpp(295,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\HappyHarvey\Desktop\New PROG50016 Project 1\New PROG50016 Project 1\New PROG50016 Project 1\json.hpp(297,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\HappyHarvey\Desktop\New PROG50016 Project 1\New PROG50016 Project 1\New PROG50016 Project 1\EnemyBoss.cpp(15,45): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\HappyHarvey\Desktop\New PROG50016 Project 1\New PROG50016 Project 1\New PROG50016 Project 1\EnemyBoss.cpp(20,75): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\HappyHarvey\Desktop\New PROG50016 Project 1\New PROG50016 Project 1\New PROG50016 Project 1\EnemyBoss.cpp(20,45): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\HappyHarvey\Desktop\New PROG50016 Project 1\New PROG50016 Project 1\New PROG50016 Project 1\EnemyBoss.cpp(21,25): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  New PROG50016 Project 1.vcxproj -> C:\Users\HappyHarvey\Desktop\New PROG50016 Project 1\New PROG50016 Project 1\x64\Debug\New PROG50016 Project 1.exe
