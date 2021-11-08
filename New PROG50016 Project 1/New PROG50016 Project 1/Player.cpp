@@ -15,6 +15,7 @@ Player::Player()
 	m_health = document["health"].ToInt();
 
 	sf::Sprite* sprite = new sf::Sprite;
+	sprite->setScale(document["scaleX"].ToFloat(), document["scaleY"].ToFloat());
 
 	m_sprite = sprite;
 

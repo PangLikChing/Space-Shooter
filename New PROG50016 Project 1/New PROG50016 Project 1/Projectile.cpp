@@ -19,6 +19,7 @@ Projectile::Projectile(sf::Vector2f _position)
 	m_movespeed = -(document["movespeed"].ToInt());
 
 	sf::Sprite* sprite = new sf::Sprite;
+	sprite->setScale(document["scaleX"].ToFloat(), document["scaleY"].ToFloat());
 	sprite->setPosition(_position);
 	m_sprite = sprite;
 

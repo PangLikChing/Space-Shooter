@@ -11,6 +11,8 @@ Asteroid::Asteroid(sf::RenderWindow* window)
 	std::uniform_int_distribution<std::mt19937::result_type> dist2(0, 1);
 	m_isBig = dist2(rng);
 
+	sf::Sprite* sprite = new sf::Sprite;
+
 	if (m_isBig == true)
 	{
 		std::ifstream inputStream("./JSON/AsteroidBig.json");
@@ -21,6 +23,7 @@ Asteroid::Asteroid(sf::RenderWindow* window)
 		m_textureName = document["texture"].ToString();
 		m_movespeed = document["movespeed"].ToFloat();
 		m_health = document["health"].ToInt();
+		sprite->setScale(document["scaleX"].ToFloat(), document["scaleY"].ToFloat());
 	}
 	else
 	{
@@ -32,9 +35,9 @@ Asteroid::Asteroid(sf::RenderWindow* window)
 		m_textureName = document["texture"].ToString();
 		m_movespeed = document["movespeed"].ToFloat();
 		m_health = document["health"].ToInt();
+		sprite->setScale(document["scaleX"].ToFloat(), document["scaleY"].ToFloat());
 	}
 
-	sf::Sprite* sprite = new sf::Sprite;
 	sprite->setPosition((rand() % window->getSize().x * 0.8) + -(window->getSize().x * 0.4), -(window->getSize().y * 0.5));
 	m_sprite = sprite;
 

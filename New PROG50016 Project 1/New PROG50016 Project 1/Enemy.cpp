@@ -17,6 +17,8 @@ Enemy::Enemy(sf::RenderWindow* window)
 	std::uniform_int_distribution<std::mt19937::result_type> dist2(0, 1);
 	m_isShip = dist2(rng);
 
+	sf::Sprite* sprite = new sf::Sprite;
+
 	if (m_isShip == true)
 	{
 		std::ifstream inputStream("./JSON/EnemyShip.json");
@@ -28,6 +30,7 @@ Enemy::Enemy(sf::RenderWindow* window)
 		m_score = document["score"].ToInt();
 		m_movespeed = document["movespeed"].ToFloat();
 		m_health = document["health"].ToInt();
+		sprite->setScale(document["scaleX"].ToFloat(), document["scaleY"].ToFloat());
 	}
 	else
 	{
@@ -40,9 +43,9 @@ Enemy::Enemy(sf::RenderWindow* window)
 		m_score = document["score"].ToInt();
 		m_movespeed = document["movespeed"].ToFloat();
 		m_health = document["health"].ToInt();
+		sprite->setScale(document["scaleX"].ToFloat(), document["scaleY"].ToFloat());
 	}
 
-	sf::Sprite* sprite = new sf::Sprite;
 	sprite->setPosition((rand() % window->getSize().x * 0.8) + -(window->getSize().x * 0.4), -(window->getSize().y * 0.5));
 
 	m_sprite = sprite;
