@@ -19,7 +19,6 @@ public:
 
 protected:
 	// Members
-	std::string m_name = "";
 	std::string m_textureName = "";
 	float m_movespeed = 0.0f;
 	sf::Sprite* m_sprite = nullptr;

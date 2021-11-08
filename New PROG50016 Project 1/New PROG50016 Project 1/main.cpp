@@ -224,7 +224,7 @@ int main()
 							if (asteroids[i]->GetHealth() > 0)
 							{
 								// Calculate the health remaining
-								asteroids[i]->SetHealth(asteroids[i]->GetHealth() - 1);
+								asteroids[i]->SetHealth(asteroids[i]->GetHealth() - player->GetProjectileList()[j]->GetDamage());
 
 								// Add it to toBeDeleted it if its health is below 0
 								if (asteroids[i]->GetHealth() <= 0)
@@ -257,8 +257,8 @@ int main()
 				if (enemies[i]->GetProjectileList()[j]->GetSprite()->getGlobalBounds().intersects(player->GetSprite()->getGlobalBounds()))
 				{
 					// Calculate the player life remaining
-					player->SetHealth(player->GetHealth() - 1);
-					playerLife -= 1;
+					player->SetHealth(player->GetHealth() - enemies[i]->GetProjectileList()[j]->GetDamage());
+					playerLife = player->GetHealth();
 					lifeText.setString("Life: " + std::to_string(playerLife));
 					
 					// Detroy the enemy projectile that hits the player
@@ -334,16 +334,11 @@ int main()
 				{
 					if (enemies[i]->GetSprite()->getGlobalBounds().intersects(player->GetProjectileList()[k]->GetSprite()->getGlobalBounds()))
 					{
-						// Delete the player projectile that hits the enemy
-						delete(player->GetProjectileList()[k]);
-						player->GetProjectileList()[k] = nullptr;
-						player->GetProjectileList().erase(player->GetProjectileList().begin() + k);
-
 						// Just to be safe
 						if (enemies[i]->GetHealth() > 0)
 						{
 							// Calculate the health remaining
-							enemies[i]->SetHealth(enemies[i]->GetHealth() - 1);
+							enemies[i]->SetHealth(enemies[i]->GetHealth() - player->GetProjectileList()[k]->GetDamage());
 
 							// Add it to toBeDeleted it if its health is below 0
 							if (enemies[i]->GetHealth() <= 0)
@@ -352,6 +347,10 @@ int main()
 								score += enemies[i]->GetScore();
 							}
 						}
+						// Delete the player projectile that hits the enemy
+						delete(player->GetProjectileList()[k]);
+						player->GetProjectileList()[k] = nullptr;
+						player->GetProjectileList().erase(player->GetProjectileList().begin() + k);
 					}
 				}
 			}
@@ -430,16 +429,12 @@ int main()
 				{
 					if (enemybosses[i]->GetSprite()->getGlobalBounds().intersects(player->GetProjectileList()[k]->GetSprite()->getGlobalBounds()))
 					{
-						// Delete the player projectile that hits the enemy
-						delete(player->GetProjectileList()[k]);
-						player->GetProjectileList()[k] = nullptr;
-						player->GetProjectileList().erase(player->GetProjectileList().begin() + k);
 
 						// Just to be safe
 						if (enemybosses[i]->GetHealth() > 0)
 						{
 							// Calculate the health remaining
-							enemybosses[i]->SetHealth(enemybosses[i]->GetHealth() - 1);
+							enemybosses[i]->SetHealth(enemybosses[i]->GetHealth() - player->GetProjectileList()[k]->GetDamage());
 
 							// Add it to toBeDeleted it if its health is below 0
 							if (enemybosses[i]->GetHealth() <= 0)
@@ -448,6 +443,10 @@ int main()
 								score += enemybosses[i]->GetScore();
 							}
 						}
+						// Delete the player projectile that hits the enemy
+						delete(player->GetProjectileList()[k]);
+						player->GetProjectileList()[k] = nullptr;
+						player->GetProjectileList().erase(player->GetProjectileList().begin() + k);
 					}
 				}
 
@@ -471,8 +470,8 @@ int main()
 				if (enemybosses[i]->GetProjectileList()[j]->GetSprite()->getGlobalBounds().intersects(player->GetSprite()->getGlobalBounds()))
 				{
 					// Calculate the player life remaining
-					player->SetHealth(player->GetHealth() - 1);
-					playerLife -= 1;
+					player->SetHealth(player->GetHealth() - enemybosses[i]->GetProjectileList()[j]->GetDamage());
+					playerLife = player->GetHealth();
 					lifeText.setString("Life: " + std::to_string(playerLife));
 
 					// Detroy the enemy projectile that hits the player

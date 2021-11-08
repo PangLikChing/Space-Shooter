@@ -3,5 +3,6 @@
     "texture": "./Assets/Textures/laserRed.png",
     "movespeed": 10,
     "scaleX": 1.0,
-    "scaleY": 1.0
+    "scaleY": 1.0,
+    "damage" : 2
 }

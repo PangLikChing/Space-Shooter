@@ -11,9 +11,14 @@ public:
 
 	~Projectile();
 
+	int GetDamage();
+
 	sf::Sprite* GetSprite();
 
 	int DrawObject(sf::RenderWindow* window);
+
+protected:
+	int m_damage = 0;
 };
 
 #endif // !PROJECTILE_H

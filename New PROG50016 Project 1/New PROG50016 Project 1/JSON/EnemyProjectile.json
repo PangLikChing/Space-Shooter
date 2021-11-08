@@ -3,5 +3,6 @@
     "texture": "./Assets/Textures/laserGreen.png",
     "movespeed": 10.0,
     "scaleX": 1.0,
-    "scaleY": 1.0
+    "scaleY": 1.0,
+    "damage": 2
 }

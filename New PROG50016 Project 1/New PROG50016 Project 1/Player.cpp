@@ -10,7 +10,6 @@ Player::Player()
 	json::JSON document = json::JSON::Load(str);
 
 	// Loading image texture
-	m_name = document["name"].ToString();
 	m_textureName = document["texture"].ToString();
 	m_health = document["health"].ToInt();
 

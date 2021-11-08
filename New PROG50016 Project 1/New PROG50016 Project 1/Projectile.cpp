@@ -14,9 +14,9 @@ Projectile::Projectile(sf::Vector2f _position)
 	std::string str((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>());
 	json::JSON document = json::JSON::Load(str);
 
-	m_name = document["name"].ToString();
 	m_textureName = document["texture"].ToString();
 	m_movespeed = -(document["movespeed"].ToInt());
+	m_damage = document["damage"].ToInt();
 
 	sf::Sprite* sprite = new sf::Sprite;
 	sprite->setScale(document["scaleX"].ToFloat(), document["scaleY"].ToFloat());
@@ -29,6 +29,11 @@ Projectile::Projectile(sf::Vector2f _position)
 Projectile::~Projectile()
 {
 	std::cout << "Projectile destroyed" << std::endl;
+}
+
+int Projectile::GetDamage()
+{
+	return m_damage;
 }
 
 sf::Sprite* Projectile::GetSprite()
