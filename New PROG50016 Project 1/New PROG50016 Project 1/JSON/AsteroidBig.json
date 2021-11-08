@@ -2,5 +2,7 @@
     "name": "AsteroidBig",
     "texture": "./Assets/Textures/meteorBig.png",
     "movespeed": 0.5,
+    "scaleX": 1.0,
+    "scaleY": 1.0,
     "health": 3
 }

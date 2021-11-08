@@ -1,5 +1,7 @@
 {
     "name": "Player",
-    "textureName": "./Assets/Textures/Player.png",
-    "health": 3
+    "texture": "./Assets/Textures/Player.png",
+    "health": 3,
+    "scaleX": 1.0,
+    "scaleY": 1.0
 }

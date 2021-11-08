@@ -3,5 +3,7 @@
     "texture": "./Assets/Textures/enemyShip.png",
     "score": 1,
     "movespeed": 5.0,
+    "scaleX": 1.0,
+    "scaleY": 1.0,
     "health": 1
 }

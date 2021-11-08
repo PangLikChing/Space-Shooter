@@ -15,8 +15,8 @@ Projectile::Projectile(sf::Vector2f _position)
 	json::JSON document = json::JSON::Load(str);
 
 	m_name = document["name"].ToString();
-	m_textureName = document["textureName"].ToString();
-	m_movespeed = document["movespeed"].ToInt();
+	m_textureName = document["texture"].ToString();
+	m_movespeed = -(document["movespeed"].ToInt());
 
 	sf::Sprite* sprite = new sf::Sprite;
 	sprite->setPosition(_position);

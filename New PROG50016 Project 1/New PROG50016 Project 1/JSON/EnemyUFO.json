@@ -3,5 +3,7 @@
     "texture": "./Assets/Textures/enemyUFO.png",
     "score": 3,
     "movespeed": 2.0,
+    "scaleX": 1.0,
+    "scaleY": 1.0,
     "health": 3
 }

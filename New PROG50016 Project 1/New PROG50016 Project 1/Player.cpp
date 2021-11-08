@@ -11,7 +11,7 @@ Player::Player()
 
 	// Loading image texture
 	m_name = document["name"].ToString();
-	m_textureName = document["textureName"].ToString();
+	m_textureName = document["texture"].ToString();
 	m_health = document["health"].ToInt();
 
 	sf::Sprite* sprite = new sf::Sprite;

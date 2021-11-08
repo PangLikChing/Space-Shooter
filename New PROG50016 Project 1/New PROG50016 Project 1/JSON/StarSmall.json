@@ -1,6 +1,8 @@
 {
     "name": "StarSmall",
-    "textureName": "./Assets/Textures/starSmall.png",
+    "texture": "./Assets/Textures/starSmall.png",
     "isBig": false,
-    "movespeed": 0.5
+    "movespeed": 0.5,
+    "scaleX": 1.0,
+    "scaleY": 1.0
 }

@@ -22,7 +22,7 @@ Star::Star(sf::RenderWindow* window)
 		json::JSON document = json::JSON::Load(str);
 
 		m_name = document["name"].ToString();
-		m_textureName = document["textureName"].ToString();
+		m_textureName = document["texture"].ToString();
 		m_isBig = document["isBig"].ToBool();
 		m_movespeed = document["movespeed"].ToFloat();
 	}
@@ -33,7 +33,7 @@ Star::Star(sf::RenderWindow* window)
 		json::JSON document = json::JSON::Load(str);
 
 		m_name = document["name"].ToString();
-		m_textureName = document["textureName"].ToString();
+		m_textureName = document["texture"].ToString();
 		m_isBig = document["isBig"].ToBool();
 		m_movespeed = document["movespeed"].ToFloat();
 	}
@@ -44,7 +44,7 @@ Star::Star(sf::RenderWindow* window)
 		json::JSON document = json::JSON::Load(str);
 
 		m_name = document["name"].ToString();
-		m_textureName = document["textureName"].ToString();
+		m_textureName = document["texture"].ToString();
 		m_isBig = document["isBig"].ToBool();
 		m_movespeed = document["movespeed"].ToFloat();
 	}
