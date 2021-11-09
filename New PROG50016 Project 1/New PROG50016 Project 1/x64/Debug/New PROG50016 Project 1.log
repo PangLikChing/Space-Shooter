@@ -1,0 +1,6 @@
+﻿  DatabaseManager.cpp
+C:\Users\HappyHarvey\Desktop\New PROG50016 Project1\New PROG50016 Project 1\New PROG50016 Project 1\DatabaseManager.cpp(19,2): warning C4002: too many arguments for function-like macro invocation 'assert'
+C:\Users\HappyHarvey\Desktop\New PROG50016 Project1\New PROG50016 Project 1\New PROG50016 Project 1\DatabaseManager.cpp(31,69): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\HappyHarvey\Desktop\New PROG50016 Project1\New PROG50016 Project 1\New PROG50016 Project 1\DatabaseManager.cpp(81,2): warning C4002: too many arguments for function-like macro invocation 'assert'
+C:\Users\HappyHarvey\Desktop\New PROG50016 Project1\New PROG50016 Project 1\New PROG50016 Project 1\DatabaseManager.cpp(98,2): warning C4002: too many arguments for function-like macro invocation 'assert'
+  New PROG50016 Project 1.vcxproj -> C:\Users\HappyHarvey\Desktop\New PROG50016 Project1\New PROG50016 Project 1\x64\Debug\New PROG50016 Project 1.exe

@@ -8,7 +8,7 @@
 #include "EnemyBoss.h"
 #include "Asteroid.h"
 
-void Reload(int &_score, int &_highScore, int &_playerLife, Player* _player, sf::RenderWindow* window, std::vector<Enemy*> &_enemies, std::vector<Asteroid*> &_asteroids, std::vector<EnemyBoss*> &_enemyBoss)
+void Reload(int &_score, int &_highScore, int _maxLife, int &_playerLife, Player* _player, sf::RenderWindow* window, std::vector<Enemy*> &_enemies, std::vector<Asteroid*> &_asteroids, std::vector<EnemyBoss*> &_enemyBoss)
 {
 	if (_player->GetHealth() <= 0)
 	{
@@ -20,8 +20,8 @@ void Reload(int &_score, int &_highScore, int &_playerLife, Player* _player, sf:
 
 		// Reset the score and playerLife
 		_score = 0;
-		_playerLife = 3;
-		_player->SetHealth(3);
+		_playerLife = _maxLife;
+		_player->SetHealth(_maxLife);
 
 		// Delete everything except the player
 		for (int i = 0; i < _enemies.size(); i++)
@@ -59,10 +59,6 @@ int main()
 	std::string str((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>());
 	json::JSON document = json::JSON::Load(str);
 
-	int score = 0;
-	int highScore = 0;
-	int playerLife = 3;
-
 	sf::View view;
 	float width = document["width"].ToFloat(), height = document["height"].ToFloat();
 	sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(width, height), document["name"].ToString());
@@ -82,6 +78,11 @@ int main()
 	int asteroidSpawnTimer = 0;
 	int starSpawnTimer = 0;
 	int enemyBossSpawnTimer = 0;
+
+	int score = 0;
+	int highScore = 0;
+	int playerMaxLife = player->GetHealth();
+	int playerLife = player->GetHealth();
 	
 
 	// Loading image texture
@@ -202,7 +203,7 @@ int main()
 				{
 					std::cout << "RELOADDDDDDDDDDDDDDDDDDDDDDDDDDD" << std::endl;
 					player->SetHealth(0);
-					Reload(score, highScore, playerLife, player, window, enemies, asteroids, enemybosses);
+					Reload(score, highScore, playerMaxLife, playerLife, player, window, enemies, asteroids, enemybosses);
 					scoreText.setString("Score: " + std::to_string(score));
 					lifeText.setString("Life: " + std::to_string(playerLife));
 					highScoreText.setString("Highscore: " + std::to_string(highScore));
@@ -269,7 +270,7 @@ int main()
 					// Reload the game if the player dies
 					if (player->GetHealth() <= 0)
 					{
-						Reload(score, highScore, playerLife, player, window, enemies, asteroids, enemybosses);
+						Reload(score, highScore, playerMaxLife, playerLife, player, window, enemies, asteroids, enemybosses);
 						scoreText.setString("Score: " + std::to_string(score));
 						lifeText.setString("Life: " + std::to_string(playerLife));
 						highScoreText.setString("Highscore: " + std::to_string(highScore));
@@ -322,7 +323,7 @@ int main()
 					// Reload Game
 					std::cout << "RELOADDDDDDDDDDDDDDDDDDDDDDDDDDD" << std::endl;
 					player->SetHealth(0);
-					Reload(score, highScore, playerLife, player, window, enemies, asteroids, enemybosses);
+					Reload(score, highScore, playerMaxLife, playerLife, player, window, enemies, asteroids, enemybosses);
 					scoreText.setString("Score: " + std::to_string(score));
 					lifeText.setString("Life: " + std::to_string(playerLife));
 					highScoreText.setString("Highscore: " + std::to_string(highScore));
@@ -417,7 +418,7 @@ int main()
 					// Reload Game
 					std::cout << "RELOADDDDDDDDDDDDDDDDDDDDDDDDDDD" << std::endl;
 					player->SetHealth(0);
-					Reload(score, highScore, playerLife, player, window, enemies, asteroids, enemybosses);
+					Reload(score, highScore, playerMaxLife, playerLife, player, window, enemies, asteroids, enemybosses);
 					scoreText.setString("Score: " + std::to_string(score));
 					lifeText.setString("Life: " + std::to_string(playerLife));
 					highScoreText.setString("Highscore: " + std::to_string(highScore));
@@ -482,7 +483,7 @@ int main()
 					// Reload the game if the player dies
 					if (player->GetHealth() <= 0)
 					{
-						Reload(score, highScore, playerLife, player, window, enemies, asteroids, enemybosses);
+						Reload(score, highScore, playerMaxLife, playerLife, player, window, enemies, asteroids, enemybosses);
 						scoreText.setString("Score: " + std::to_string(score));
 						lifeText.setString("Life: " + std::to_string(playerLife));
 						highScoreText.setString("Highscore: " + std::to_string(highScore));
