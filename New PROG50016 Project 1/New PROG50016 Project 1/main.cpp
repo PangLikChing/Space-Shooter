@@ -7,11 +7,13 @@
 #include "Player.h"
 #include "EnemyBoss.h"
 #include "Asteroid.h"
+#include "DatabaseManager.h"
 
-void Reload(int &_score, int &_highScore, int _maxLife, int &_playerLife, Player* _player, sf::RenderWindow* window, std::vector<Enemy*> &_enemies, std::vector<Asteroid*> &_asteroids, std::vector<EnemyBoss*> &_enemyBoss)
+void Reload(int &_score, int &_highScore, int _maxLife, int &_playerLife, Player* _player, sf::RenderWindow* window, std::vector<Enemy*> &_enemies, std::vector<Asteroid*> &_asteroids, std::vector<EnemyBoss*> &_enemyBoss, DatabaseManager* _databaseManager, int& _playerDeathCount)
 {
 	if (_player->GetHealth() <= 0)
 	{
+		_playerDeathCount++;
 		// Update the highscore
 		if (_highScore < _score)
 		{
@@ -47,6 +49,7 @@ void Reload(int &_score, int &_highScore, int _maxLife, int &_playerLife, Player
 		_asteroids.clear();
 		// Reset Player position
 		_player->GetSprite()->setPosition(0, 0);
+		_databaseManager->UpdatePlayerDeath(_playerDeathCount);
 		// Reload the game
 		window->clear();
 	}
@@ -55,6 +58,7 @@ void Reload(int &_score, int &_highScore, int _maxLife, int &_playerLife, Player
 // This is basically my game manager. Should have made a new class for it
 int main()
 {
+	DatabaseManager* databaseManager = new DatabaseManager();
 	std::ifstream inputStream("./JSON/Main.json");
 	std::string str((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>());
 	json::JSON document = json::JSON::Load(str);
@@ -84,6 +88,17 @@ int main()
 	int playerMaxLife = player->GetHealth();
 	int playerLife = player->GetHealth();
 	
+	// Database stuff
+	int playerDeath = 0;
+	int enemyKilled = 0;
+	int asteroidKilled = 0;
+	int collisionDeath = 0;
+	int bossKilled = 0;
+	databaseManager->UpdatePlayerDeath(playerDeath);
+	databaseManager->UpdateSpaceShipDead(enemyKilled);
+	databaseManager->UpdateAsteroidDead(asteroidKilled);
+	databaseManager->UpdatePlayerDeathByCollision(collisionDeath);
+	databaseManager->UpdateBossKilled(bossKilled);
 
 	// Loading image texture
 	sf::Texture backgroundTexture;
@@ -144,7 +159,7 @@ int main()
 		sf::Event event;
 		while (window->isOpen() == true && window->pollEvent(event) && window != nullptr)
 		{
-			eventController.HandleEvents(event, window, player, enemies, asteroids, stars);
+			eventController.HandleEvents(event, window, player, enemies, asteroids, stars, databaseManager);
 		}
 
 		// Spawn stars every 4 second
@@ -203,10 +218,12 @@ int main()
 				{
 					std::cout << "RELOADDDDDDDDDDDDDDDDDDDDDDDDDDD" << std::endl;
 					player->SetHealth(0);
-					Reload(score, highScore, playerMaxLife, playerLife, player, window, enemies, asteroids, enemybosses);
+					Reload(score, highScore, playerMaxLife, playerLife, player, window, enemies, asteroids, enemybosses, databaseManager, playerDeath);
 					scoreText.setString("Score: " + std::to_string(score));
 					lifeText.setString("Life: " + std::to_string(playerLife));
 					highScoreText.setString("Highscore: " + std::to_string(highScore));
+					collisionDeath++;
+					databaseManager->UpdatePlayerDeathByCollision(collisionDeath);
 					break;
 				}
 
@@ -242,9 +259,11 @@ int main()
 		// Clear the asteroids list
 		for (int k = 0; k < toBeDeleted.size(); k++)
 		{
+			asteroidKilled++;
 			delete(asteroids[toBeDeleted[k]]);
 			asteroids[toBeDeleted[k]] = nullptr;
 			asteroids.erase(asteroids.begin() + toBeDeleted[k]);
+			databaseManager->UpdateAsteroidDead(asteroidKilled);
 		}
 
 		// Clear the toBeDeleted list
@@ -270,7 +289,7 @@ int main()
 					// Reload the game if the player dies
 					if (player->GetHealth() <= 0)
 					{
-						Reload(score, highScore, playerMaxLife, playerLife, player, window, enemies, asteroids, enemybosses);
+						Reload(score, highScore, playerMaxLife, playerLife, player, window, enemies, asteroids, enemybosses, databaseManager, playerDeath);
 						scoreText.setString("Score: " + std::to_string(score));
 						lifeText.setString("Life: " + std::to_string(playerLife));
 						highScoreText.setString("Highscore: " + std::to_string(highScore));
@@ -323,10 +342,12 @@ int main()
 					// Reload Game
 					std::cout << "RELOADDDDDDDDDDDDDDDDDDDDDDDDDDD" << std::endl;
 					player->SetHealth(0);
-					Reload(score, highScore, playerMaxLife, playerLife, player, window, enemies, asteroids, enemybosses);
+					Reload(score, highScore, playerMaxLife, playerLife, player, window, enemies, asteroids, enemybosses, databaseManager, playerDeath);
 					scoreText.setString("Score: " + std::to_string(score));
 					lifeText.setString("Life: " + std::to_string(playerLife));
 					highScoreText.setString("Highscore: " + std::to_string(highScore));
+					collisionDeath++;
+					databaseManager->UpdatePlayerDeathByCollision(collisionDeath);
 					break;
 				}
 
@@ -360,9 +381,11 @@ int main()
 		// Clear the enemybosses list
 		for (int k = 0; k < toBeDeleted.size(); k++)
 		{
+			enemyKilled++;
 			delete(enemies[toBeDeleted[k]]);
 			enemies[toBeDeleted[k]] = nullptr;
 			enemies.erase(enemies.begin() + toBeDeleted[k]);
+			databaseManager->UpdateSpaceShipDead(enemyKilled);
 		}
 		toBeDeleted.clear();
 
@@ -418,10 +441,12 @@ int main()
 					// Reload Game
 					std::cout << "RELOADDDDDDDDDDDDDDDDDDDDDDDDDDD" << std::endl;
 					player->SetHealth(0);
-					Reload(score, highScore, playerMaxLife, playerLife, player, window, enemies, asteroids, enemybosses);
+					Reload(score, highScore, playerMaxLife, playerLife, player, window, enemies, asteroids, enemybosses, databaseManager, playerDeath);
 					scoreText.setString("Score: " + std::to_string(score));
 					lifeText.setString("Life: " + std::to_string(playerLife));
 					highScoreText.setString("Highscore: " + std::to_string(highScore));
+					collisionDeath++;
+					databaseManager->UpdatePlayerDeathByCollision(collisionDeath);
 					break;
 				}
 
@@ -457,9 +482,11 @@ int main()
 		// Clear the enemybosses list
 		for (int k = 0; k < toBeDeleted.size(); k++)
 		{
+			bossKilled++;
 			delete(enemybosses[toBeDeleted[k]]);
 			enemybosses[toBeDeleted[k]] = nullptr;
 			enemybosses.erase(enemybosses.begin() + toBeDeleted[k]);
+			databaseManager->UpdateBossKilled(bossKilled);
 		}
 		toBeDeleted.clear();
 
@@ -483,7 +510,7 @@ int main()
 					// Reload the game if the player dies
 					if (player->GetHealth() <= 0)
 					{
-						Reload(score, highScore, playerMaxLife, playerLife, player, window, enemies, asteroids, enemybosses);
+						Reload(score, highScore, playerMaxLife, playerLife, player, window, enemies, asteroids, enemybosses, databaseManager, playerDeath);
 						scoreText.setString("Score: " + std::to_string(score));
 						lifeText.setString("Life: " + std::to_string(playerLife));
 						highScoreText.setString("Highscore: " + std::to_string(highScore));
@@ -577,5 +604,6 @@ int main()
 	}
 
 	delete player;
+	delete databaseManager;
 	delete window;
 }

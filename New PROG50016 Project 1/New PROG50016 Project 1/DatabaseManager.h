@@ -17,7 +17,15 @@ public:
 
 	void Read();
 
-	void Update();
+	void UpdatePlayerDeath(int _playerDeath);
+
+	void UpdateSpaceShipDead(int _spaceShipDead);
+
+	void UpdateAsteroidDead(int _asteroidDead);
+
+	void UpdatePlayerDeathByCollision(int _collisionDeath);
+
+	void UpdateBossKilled(int _bosskilled);
 };
 
 #endif // !DATABASEMANAGER_H

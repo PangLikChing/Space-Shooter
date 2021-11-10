@@ -20,7 +20,7 @@ EventController::~EventController()
 }
 
 // Should do the delete events on the Game Manager instead. See if I have time to implement it
-void EventController::HandleEvents(sf::Event event, sf::RenderWindow* window, Player* player, std::vector<Enemy*>& enemies, std::vector<Asteroid*>& asteroids, std::vector<Star*>& stars)
+void EventController::HandleEvents(sf::Event event, sf::RenderWindow* window, Player* player, std::vector<Enemy*>& enemies, std::vector<Asteroid*>& asteroids, std::vector<Star*>& stars, DatabaseManager* databaseManager)
 {
 	switch (event.type)
 	{
@@ -104,6 +104,8 @@ void EventController::HandleEvents(sf::Event event, sf::RenderWindow* window, Pl
 			window->close();
 			delete player;
 			player = nullptr;
+			delete databaseManager;
+			databaseManager = nullptr;
 			for (int i = 0; i < enemies.size(); i++)
 			{
 				delete enemies[i];

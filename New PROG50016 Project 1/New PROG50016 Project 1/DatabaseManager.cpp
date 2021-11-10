@@ -13,13 +13,13 @@ DatabaseManager::~DatabaseManager()
 
 void DatabaseManager::Create()
 {
-	std::string name = "";
+	int id = 1;
 	// Open database
 	sqlite3* db = Open();
 	assert(db != nullptr, "Unable to open database");
 
 	// Make statement
-	std::string statement = "INSERT INTO Example_Table (name) VALUES (@name);";
+	std::string statement = "INSERT INTO Data (id) VALUES (@id);";
 
 	sqlite3_stmt* stm;
 	int result = sqlite3_prepare_v2(db, statement.c_str(), -1, &stm, 0);
@@ -27,8 +27,8 @@ void DatabaseManager::Create()
 	if (result == SQLITE_OK)
 	{
 		// Excute statement
-		int index = sqlite3_bind_parameter_index(stm, "@name");
-		sqlite3_bind_text(stm, index, name.c_str(), name.length(), nullptr);
+		int index = sqlite3_bind_parameter_index(stm, "@id");
+		sqlite3_bind_int(stm, index, id);
 
 		result = sqlite3_step(stm);
 		sqlite3_finalize(stm);
@@ -50,7 +50,7 @@ sqlite3* DatabaseManager::Open()
 {
 	sqlite3* db = nullptr;
 
-	int result = sqlite3_open("Example.db", &db);
+	int result = sqlite3_open("Data.db", &db);
 	if (result)
 	{
 		std::cout << "Can't open database: " << sqlite3_errmsg(db) << std::endl;
@@ -80,7 +80,7 @@ void DatabaseManager::Read()
 	sqlite3* db = Open();
 	assert(db != nullptr, "Unable to open database");
 
-	std::string statement = "SELECT * FROM Example_Table";
+	std::string statement = "SELECT * FROM Data";
 	int result = sqlite3_exec(db, statement.c_str(), ReadCallback, (void*)"Custom Message", &errMessage);
 	if (result != SQLITE_OK)
 	{
@@ -91,23 +91,139 @@ void DatabaseManager::Read()
 	sqlite3_close(db);
 }
 
-void DatabaseManager::Update()
+void DatabaseManager::UpdatePlayerDeath(int _playerDeath)
 {
 	// Open DB
 	sqlite3* db = Open();
 	assert(db != nullptr, "Unable to open database");
 
-	int id = -1;
-	//std::cout << "Enter id to update: ";
-	//std::cin >> id;
+	int playerDeath = _playerDeath;
+	// id can be changed later if neccessary. id is only useful if the data has multiple enterence
+	//int id = 1;
 
-	std::string sql_statement = "UPDATE Example_Table SET name = @name WHERE id = @id";
+	//std::string sql_statement = "UPDATE Data SET playerDeath = @playerDeath WHERE id = @id;";
+	std::string sql_statement = "UPDATE Data SET playerDeath = @playerDeath";
 	sqlite3_stmt* statement = nullptr;
 	int result = sqlite3_prepare_v2(db, sql_statement.c_str(), -1, &statement, nullptr);
 	if (result == SQLITE_OK)
 	{
-		int index = sqlite3_bind_parameter_index(statement, "@id");
-		sqlite3_bind_int(statement, index, id);
+		//int index = sqlite3_bind_parameter_index(statement, "@id");
+		//sqlite3_bind_int(statement, index, id);
+
+		int index2 = sqlite3_bind_parameter_index(statement, "@playerDeath");
+		sqlite3_bind_int(statement, index2, playerDeath);
+
+		result = sqlite3_step(statement);
+		sqlite3_finalize(statement);
+	}
+	else
+	{
+		std::cout << "Error" << std::endl;
+	}
+
+	sqlite3_close(db);
+}
+
+// Not Updated
+void DatabaseManager::UpdateSpaceShipDead(int _spaceShipDead)
+{
+	// Open DB
+	sqlite3* db = Open();
+	assert(db != nullptr, "Unable to open database");
+
+	int spaceShipDead = _spaceShipDead;
+
+	std::string sql_statement = "UPDATE Data SET spaceShipDead = @spaceShipDead;";
+	sqlite3_stmt* statement = nullptr;
+	int result = sqlite3_prepare_v2(db, sql_statement.c_str(), -1, &statement, nullptr);
+	if (result == SQLITE_OK)
+	{
+		int index = sqlite3_bind_parameter_index(statement, "@spaceShipDead");
+		sqlite3_bind_int(statement, index, spaceShipDead);
+
+		result = sqlite3_step(statement);
+		sqlite3_finalize(statement);
+	}
+	else
+	{
+		std::cout << "Error" << std::endl;
+	}
+
+	sqlite3_close(db);
+}
+
+// Not Updated
+void DatabaseManager::UpdateAsteroidDead(int _asteroidDead)
+{
+	// Open DB
+	sqlite3* db = Open();
+	assert(db != nullptr, "Unable to open database");
+
+	int asteroidDead = _asteroidDead;
+
+	std::string sql_statement = "UPDATE Data SET asteroidDead = @asteroidDead;";
+	sqlite3_stmt* statement = nullptr;
+	int result = sqlite3_prepare_v2(db, sql_statement.c_str(), -1, &statement, nullptr);
+	if (result == SQLITE_OK)
+	{
+		int index = sqlite3_bind_parameter_index(statement, "@asteroidDead");
+		sqlite3_bind_int(statement, index, asteroidDead);
+
+		result = sqlite3_step(statement);
+		sqlite3_finalize(statement);
+	}
+	else
+	{
+		std::cout << "Error" << std::endl;
+	}
+
+	sqlite3_close(db);
+}
+
+// Not Updated
+void DatabaseManager::UpdatePlayerDeathByCollision(int _collisionDeath)
+{
+	// Open DB
+	sqlite3* db = Open();
+	assert(db != nullptr, "Unable to open database");
+
+	int collisionDeath = _collisionDeath;
+
+	std::string sql_statement = "UPDATE Data SET playerDeathByCollision = @collisionDeath;";
+	sqlite3_stmt* statement = nullptr;
+	int result = sqlite3_prepare_v2(db, sql_statement.c_str(), -1, &statement, nullptr);
+	if (result == SQLITE_OK)
+	{
+		int index = sqlite3_bind_parameter_index(statement, "@collisionDeath");
+		sqlite3_bind_int(statement, index, collisionDeath);
+
+		result = sqlite3_step(statement);
+		sqlite3_finalize(statement);
+	}
+	else
+	{
+		std::cout << "Error" << std::endl;
+	}
+
+	sqlite3_close(db);
+}
+
+// Not Updated
+void DatabaseManager::UpdateBossKilled(int _bosskilled)
+{
+	// Open DB
+	sqlite3* db = Open();
+	assert(db != nullptr, "Unable to open database");
+
+	int bossKilled = _bosskilled;
+
+	std::string sql_statement = "UPDATE Data SET numberOfBossKilled = @bossKilled;";
+	sqlite3_stmt* statement = nullptr;
+	int result = sqlite3_prepare_v2(db, sql_statement.c_str(), -1, &statement, nullptr);
+	if (result == SQLITE_OK)
+	{
+		int index = sqlite3_bind_parameter_index(statement, "@bossKilled");
+		sqlite3_bind_int(statement, index, bossKilled);
 
 		result = sqlite3_step(statement);
 		sqlite3_finalize(statement);

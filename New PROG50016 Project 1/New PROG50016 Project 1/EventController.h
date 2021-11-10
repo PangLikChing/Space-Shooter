@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Asteroid.h"
+#include "DatabaseManager.h"
 #include <vector>
 #include <SFML/Graphics.hpp>
 
@@ -13,7 +14,7 @@ public:
 
 	~EventController();
 
-	void HandleEvents(sf::Event event, sf::RenderWindow* window, Player* player, std::vector<Enemy*>& enemies, std::vector<Asteroid*>& asteroids, std::vector<Star*>& stars);
+	void HandleEvents(sf::Event event, sf::RenderWindow* window, Player* player, std::vector<Enemy*>& enemies, std::vector<Asteroid*>& asteroids, std::vector<Star*>& stars, DatabaseManager* databaseManager);
 
 private:
 	float m_movespeed = 0;
